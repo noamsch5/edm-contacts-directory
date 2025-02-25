@@ -1,21 +1,45 @@
 import streamlit as st
-from services.search_service import search_artist
+from database.contacts import ContactManager
 
 def main():
-    st.title("EDM Contacts Directory")
+    st.title("EDM Artists Directory")
     
-    producer_name = st.text_input("Enter the producer/DJ name:")
+now    # Initialize contact manager as a session state to persist data during the session
+    if 'contact_manager' not in st.session_state:
+        st.session_state.contact_manager = ContactManager()
     
-    if st.button("Search"):
-        if producer_name:
-            genre, contact_info = search_artist(producer_name)
-            if genre and contact_info:
-                st.success(f"Genre: {genre}")
-                st.success(f"Contact Information: {contact_info}")
-            else:
-                st.error("No information found for the given producer/DJ name.")
+    # Sidebar for adding new contacts
+    with st.sidebar:
+        st.header("Add New Artist Contact")
+        new_name = st.text_input("Artist Name")
+        new_genre = st.text_input("Genre")
+        new_email = st.text_input("Email Contact")
+        
+        if st.button("Add Contact"):
+            if new_name and new_genre and new_email:
+                st.session_state.contact_manager.add_contact(new_name, new_genre, new_email)
+                st.success(f"Added {new_name} to contacts!")
+    
+    # Main area for searching contacts
+    st.header("Search Artist Contacts")
+    search_name = st.text_input("Search for an artist:")
+    
+    if search_name:
+        contact = st.session_state.contact_manager.get_contact(search_name)
+        if contact:
+            st.success("Artist found!")
+            st.write(f"Name: {contact.name}")
+            st.write(f"Genre: {contact.genre}")
+            st.write(f"Contact: {contact.email}")
         else:
-            st.warning("Please enter a producer/DJ name.")
+            st.error("Artist not found in directory.")
+    
+    # Display all contacts
+    st.header("All Contacts")
+    contacts = st.session_state.contact_manager.list_contacts()
+    for name, genre, email in contacts:
+        with st.expander(f"{name} - {genre}"):
+            st.write(f"Email: {email}")
 
 if __name__ == "__main__":
     main()
