@@ -1,0 +1,41 @@
+Here are the contents for the file `/edm-contacts-directory/data/artists.json`:
+
+{
+  "artists": [
+    {
+      "name": "DJ Tiësto",
+      "genre": "Trance",
+      "contact_info": {
+        "email": "contact@tiesto.com"
+      }
+    },
+    {
+      "name": "Calvin Harris",
+      "genre": "Electro House",
+      "contact_info": {
+        "email": "management@calvinharris.com"
+      }
+    },
+    {
+      "name": "David Guetta",
+      "genre": "Progressive House",
+      "contact_info": {
+        "email": "info@davidguetta.com"
+      }
+    },
+    {
+      "name": "Marshmello",
+      "genre": "Future Bass",
+      "contact_info": {
+        "email": "contact@marshmello.com"
+      }
+    },
+    {
+      "name": "Skrillex",
+      "genre": "Dubstep",
+      "contact_info": {
+        "email": "info@skrillex.com"
+      }
+    }
+  ]
+}
